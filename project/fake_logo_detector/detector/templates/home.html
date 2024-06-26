@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Fake Logo Detector</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'images/background.jpg' %}"); /*  image file path */
+        background-size: cover;
+        background-position: center;
+        
+    }
+    .container {
+        border: 4px solid #6B46C1; /* border thickness */
+        padding: 20px; 
+    }
+    
+</style>
+
+
+    <!-- Header with Navigation Buttons -->
+    <header class="bg-purple-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Fake Logo Detector</h1>
+            <nav>
+                <a href="/" class="text-white mx-2 hover:underline">Home</a>
+                <a href="about" class="text-white mx-2 hover:underline">About Us</a>
+                <a href="contact" class="text-white mx-2 hover:underline">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container mx-auto text-center mt-20">
+        <p class="text-lg mb-8 text-gray-200">Detect fake logos with ease!</p>
+        
+        <div class="flex justify-center mb-8">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="image" accept="image/*" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded cursor-pointer" required>
+                    <button type="submit"  class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Upload Image</button>
+                </form>
+        </div>
+    
+        <p class="text-sm mb-4 text-gray-200">*Note: Currently supports image files only.</p>
+    
+        <div class="detector">
+            <!-- File input for selecting an image -->
+            <!-- <input type="file" id="fileInput" accept="image/*" class="hidden"> -->
+            <!-- Button to trigger the detection process -->
+            
+            </button>
+            <!-- Area to display the detection result -->
+            <div class="result mt-4 text-gray-200" id="result">
+                {% if request.method == 'POST' %}
+                    {{ images }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+        <!-- Short Descriptions -->
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full md:w-1/2 lg:w-1/3 p-4">
+                <div class="bg-purple-700 rounded p-6 h-full">
+                    <h2 class="text-xl font-bold mb-4">Accurate Detection</h2>
+                    <p class="text-gray-200">Our algorithm ensure precise detection of fake logos, providing reliable results.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 lg:w-1/3 p-4">
+                <div class="bg-purple-700 rounded p-6 h-full">
+                    <h2 class="text-xl font-bold mb-4">Fast and Efficient</h2>
+                    <p class="text-gray-200">Experience rapid processing times, making the detection process quick and efficient for your convenience.</p>
+                </div>
+            </div>
+        </div>
+        <!-- End Short Descriptions -->
+    
+    
+    
+    
+        <script>
+            const uploadInput = document.getElementById('upload');
+            const detectBtn = document.getElementById('detectBtn');
+            const result = document.getElementById('result');
+            const fileInput = document.getElementById('fileInput');
+        
+            // Trigger file input click when the visible button is clicked
+            detectBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+        
+            // Logic to detect fake logos when a file is selected
+            fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (!file) {
+                    result.textContent = 'Please select an image to analyze.';
+                    return;
+                }
+        
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imgBase64 = event.target.result;
+                    const apiUrl = 'https://your-api-url.com/detect-fake-logo'; // Replace with your API endpoint
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ imgBase64 }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            result.textContent = data.message;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            result.textContent = 'Error: Failed to analyze the image.';
+                        });
+                };
+                reader.readAsDataURL(file);
+            });
+        </script>
+
+    
+
+</body>
+</html>

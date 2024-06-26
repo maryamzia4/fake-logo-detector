@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>About Us - Fake Logo Detector</title>
+</head>
+<style>
+    body {
+        background-image: url("{% static 'images/background.jpg' %}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .container {
+        border: 4px solid #6B46C1; 
+        padding: 20px; 
+    }
+
+    p, h2, h3 {
+        margin-bottom: 16px;
+    }
+</style>
+<body class="bg-purple-900 text-white font-sans">
+
+    <!-- Header with Navigation Buttons -->
+    <header class="bg-purple-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Fake Logo Detector</h1>
+            <nav>
+                <a href="/" class="text-white mx-2 hover:underline">Home</a>
+                <a href="about" class="text-white mx-2 hover:underline">About Us</a>
+                <a href="contact" class="text-white mx-2 hover:underline">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto text-center mt-20">
+        <h2 class="text-3xl font-bold mb-8">About Fake Logo Detector</h2>
+
+        <p class="text-lg mb-6">
+            Welcome to Fake Logo Detector, your go-to solution for accurate and efficient logo detection. Our algorithm is designed to identify fake logos, providing good results to help you with the authenticity of the brand you are buying.
+        </p>
+
+        <p class="text-lg mb-6">
+            We prioritize accuracy and speed. We have collectively worked tirelessly to develop this website and algorithm that ensures fast and efficient processing times, making logo detection a seamless experience for users.
+        </p>
+
+        <p class="text-lg mb-6">
+            Whether you're a business owner, designer, or anyone concerned about the legitimacy of logos, Fake Logo Detector is here to meet your needs. Feel free to explore our website and upload images to experience the power of our logo detection technology.
+        </p>
+
+        <h3 class="text-2xl font-bold mt-12 mb-4">Our Mission</h3>
+        <p class="text-lg">
+            Our mission at Fake Logo Detector is to provide a reliable and user-friendly platform for detecting fake logos. We aim to empower individuals and businesses to safeguard their brands and intellectual property by offering cutting-edge logo detection solutions.
+        </p>
+
+    </div>
+
+
+</body>
+</html>
